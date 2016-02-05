@@ -16,19 +16,17 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
-" Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
 Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-Plugin 'user/L9', {'name': 'newL9'}
 "NERDTREE"
 Plugin 'scrooloose/nerdtree'
 "Airline"
 Plugin 'bling/vim-airline'
+"ctrlp"
+Plugin 'ctrlpvim/ctrlp.vim'
 
 "A simple vimrc that I give to people just starting to use Vim."
 "Lines beginning with a double quote are comments."
@@ -42,7 +40,6 @@ set ruler "Sets up status bar
 set laststatus=2 "Always keeps the status bar active
 set number "Turns on line numbering
 set t_Co=256 "Sets Vim to use 256 colors
-colorscheme solarized
 
 
 " Indentation settings
@@ -55,7 +52,7 @@ set smartindent "Remembers previous indent when creating new lines
 "these two. Expand for spaces, noexpand for tabs:"
 "set noexpandtab
 "set expandtab
- 
+
 
 " Search settings
 set hlsearch "Highlights search terms
@@ -87,3 +84,49 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+" Use synax highlighting
+syntax on
+
+" For any filetype plugin use plugin-defined indenting
+filetype plugin indent on
+
+" Line wrap at 79
+set textwidth=79
+
+" When using > or <, for indent / outdent, go this many spaces
+set shiftwidth=2
+
+" Automatically display line numbers
+set number
+
+" Tab is never \t, but always tabstop number of spaces
+set expandtab
+
+" Tab is 2 spaces
+set tabstop=2
+
+" Allow me to change buffers without saving
+set hidden
+
+" Do not create backup files
+set nobackup
+
+" Do not create swap files
+set noswapfile
+
+" Be a good .git user
+augroup gitcommit
+  autocmd!
+  au FileType gitcommit set tw=50
+augroup END
+
+" Reload .vimrc
+nmap <Leader>s :exec "source ~/.vimrc\|echo 'Reloaded .vimrc'"<cr>
+
+" Beautiful Magic: "jk" i insert mode returns you to Normal
+inoremap jk <ESC>
+
+" Toggle numbering modes
+nnoremap <C-n><C-n> :set number! number?<CR>
+nnoremap <C-n><C-r> :set relativenumber! relativenumber?<CR>
