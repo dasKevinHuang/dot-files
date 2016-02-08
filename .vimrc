@@ -27,6 +27,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 "ctrlp"
 Plugin 'ctrlpvim/ctrlp.vim'
+"Syntastic"
+Plugin 'scrooloose/syntastic'
 
 "A simple vimrc that I give to people just starting to use Vim."
 "Lines beginning with a double quote are comments."
