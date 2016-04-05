@@ -93,10 +93,14 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 " Use synax highlighting
+<<<<<<< HEAD
 
 syntax enable
 set background=dark
 colorscheme solarized
+=======
+syntax on
+>>>>>>> 538e4d9f9fe9ebfb44f9e4ad44555fa133932290
 
 " For any filetype plugin use plugin-defined indenting
 filetype plugin indent on
