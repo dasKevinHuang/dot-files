@@ -2,10 +2,11 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
+set rtp+=~/.fzf
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+              "call vundle#begin('~/some/path     /he r   e')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -25,12 +26,22 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'scrooloose/nerdtree'
 "Airline"
 Plugin 'bling/vim-airline'
-"ctrlp"
-Plugin 'ctrlpvim/ctrlp.vim'
 "Syntastic"
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf'
+Plugin 'valloric/youcompleteme'
+Plugin 'ternjs/tern_for_vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'vim-latex/vim-latex'
+Plugin 'leafgarland/typescript-vim'
+let g:tex_flavor='latex'
+set grepprg=grep\ -nH\ $*
+
 
 " Basic settings
 set nocompatible "Fixes old Vi bugs
@@ -41,10 +52,14 @@ set ruler "Sets up status bar
 set laststatus=2 "Always keeps the status bar active
 set number "Turns on line numbering
 set t_Co=256 "Sets Vim to use 256 colors
+set relativenumber
 
+filetype plugin on
+let mapleader = ","
 
 " Indentation settings
 set tabstop=2 "Sets display width of tabs
+set softtabstop=2
 set shiftwidth=2 "Sets indentation width
 set autoindent "Turns on auto-indenting
 " set smartindent "Remembers previous indent when creating new lines
@@ -58,7 +73,7 @@ set clipboard=unnamed
 "Choose between tabs and spaces for indentation by uncommenting one of
 "these two. Expand for spaces, noexpand for tabs:"
 "set noexpandtab
-"set expandtab
+set expandtab
 
 
 " Search settings
@@ -93,14 +108,12 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 " Use synax highlighting
-<<<<<<< HEAD
 
 syntax enable
 set background=dark
-colorscheme solarized
-=======
-syntax on
->>>>>>> 538e4d9f9fe9ebfb44f9e4ad44555fa133932290
+let g:solarized_termcolors = 256
+" colorscheme solarized
+colorscheme darkblue
 
 " For any filetype plugin use plugin-defined indenting
 filetype plugin indent on
@@ -118,7 +131,6 @@ set number
 set expandtab
 
 " Tab is 2 spaces
-set tabstop=2
 
 " Allow me to change buffers without saving
 set hidden
@@ -142,5 +154,48 @@ nmap <Leader>s :exec "source ~/.vimrc\|echo 'Reloaded .vimrc'"<cr>
 inoremap jk <ESC>
 
 " Toggle numbering modes
-nnoremap <C-n><C-n> :set number! number?<CR>
-nnoremap <C-n><C-r> :set relativenumber! relativenumber?<CR>
+" nnoremap <C-n><C-n> :set number! number?<CR>
+" nnoremap <C-n><C-r> :set relativenumber! relativenumber?<CR>
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = 'eslint_d'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_enable_highlighting = 1
+let g:syntastic_enable_ballons = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+map <Leader>n :NERDTreeToggle<CR>
+" for command mode
+nnoremap <S-Tab> <<
+nnoremap <Tab> >>
+" " for insert mode
+inoremap <S-Tab> <C-d>
+" toggle spell check with <F5>
+map <F5> :setlocal spell! spelllang=en_us<cr>
+imap <F5> <ESC>:setlocal spell! spelllang=en_us<cr>
+map <C-p> :GitFiles<cr>
+map <C-l> :nohlsearch<CR>
+set wildmenu
+set wildmode=longest:list,full
+
+" Fix for mouse detection
+if has("mouse_sgr")
+    set ttymouse=sgr
+else
+    set ttymouse=xterm2
+end
+" Turns on typescript autocompletion
+if !exists("g:ycm_semantic_triggers")
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['.']
+
+let g:syntastic_typescript_checkers=['tslint', 'tsc']
+let g:syntastic_typescript_tslint_exec="/usr/local/bin/tslint"
+"Overrides ts type for typescript
+autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
